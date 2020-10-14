@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{% block content %}
+    <section class="text-center mb-4 mt-5 ml-5">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+
+          <!--Grid column-->
+          {% for object in object_list %}
+
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!--Card-->
+            <div class="card">
+
+              <!--Card image-->
+              <div class="view overlay">
+                <img src="{{object.object_image.url}}" class="card-img-top" alt="">
+                <a href="{{object.product_detail_url}}">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+
+              <!--Card content-->
+              <div class="card-body text-center">
+                <!--Category & Title-->
+                <a href= "" class="grey-text">
+                  <h5>{{object.item.get_category_display}}</h5>
+                </a>
+                <h5>
+                  <strong>
+                    <a href="{{object.product_detail_url}}" class="dark-grey-text">{{object.item.title}}
+                      <span class="badge badge-pill {{object.item.get_label_display}}-color">NEW</span>
+                    </a>
+                  </strong>
+                </h5>
+
+                <h4 class="font-weight-bold blue-text">
+                  {% if object.item.discount_price %}
+                    <strong>{{object.item.discount_price}}₹</strong>
+                  {% else %}
+                    <strong>{{object.item.price}}₹</strong>
+                  {% endif %}
+                </h4>
+
+              </div>
+              <!--Card content-->
+
+            </div>
+            <!--Card-->
+
+          </div>
+          {% endfor %}
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+      </section>
+{% endblock %}

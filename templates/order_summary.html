@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <div class="container">
+    {% if object.items.all%}
+        <h2>Order Summary</h2>
+        <table class="table table-striped table-responsive-md btn-table">
+
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          {% for order_item in object.items.all %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+                <td><b>{{order_item.item.title}}</b></td>
+              {% if order_item.item.discount_price %}
+                <td>{{order_item.item.discount_price}}</td>
+              {% else %}
+                <td>{{order_item.item.price}}</td>
+              {% endif %}
+
+              <td>
+                  <a type="button" href="{{order_item.item.get_remove_from_cart_url}}"><i class="fas fa-minus-square mr-2" style="font-size:18px;"></i></a>
+                  {{order_item.quantity}}
+                  <a href="{{order_item.item.get_add_to_cart_url}}"><i class="fas fa-plus-square ml-2" style="font-size:18px;"></i></a>
+              </td>
+
+              {% if order_item.item.discount_price %}
+                <td>{% widthratio order_item.quantity 1 order_item.item.discount_price%}</td>
+              {% else %}
+                <td>{% widthratio order_item.quantity 1 order_item.item.price%}</td>
+              {% endif %}
+              <td>
+                <a href="{% url 'core:delete' order_item.item.pk%}">
+                   <i class="fas fa-trash-alt" style="font-size:20px; "></i>
+                </a>
+              </td>
+
+            </tr>
+
+          {% endfor %}
+          <tr>
+              <td></td>
+              <td colspan="3"><b >Order Total</b></td>
+              <td><b>{{object.total_amount}}</b></td>
+              <td></td>
+          </tr>
+
+          </tbody>
+
+        </table>
+
+        <a href="{% url 'core:checkout' %}" type="button" class="btn btn-amber btn-lg float-right">Proceed to Pay</a>
+    {% else %}
+      <p>No Items in the Cart.</p>
+    {% endif %}
+
+    </div>
+</main>
+{% endblock %}

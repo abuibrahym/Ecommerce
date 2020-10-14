@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load crispy_forms_tags %}
+<html lang="en">
+
+<head>
+
+</head>
+
+<body class="grey lighten-3">
+
+{%block content%}
+
+<!--Main layout-->
+<main >
+    <div class="container wow fadeIn">
+
+        <!-- Heading -->
+        <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+        <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-8 mb-4">
+
+                <!--Card-->
+                <div class="card">
+<!--                    <form method="post">-->
+
+<!--                        {% csrf_token %}-->
+<!--                        {{form|crispy}}-->
+<!--                        <a href="{% url 'core:charge_base' %}" type="submit" class="btn btn-primary">Checkout-->
+<!--                        </a>-->
+<!--                    </form>-->
+                    <!--Card content-->
+                    <form class="card-body">
+                        {% csrf_token %}
+                        <!--address-->
+                        <div class="md-form mb-5">
+                            {{form.street_address}}
+                           {% comment %} <input type="text" id="address" class="form-control" placeholder="1234 Main St">{% endcomment %}
+                            <label for="address" class="">Address</label>
+                        </div>
+
+                        <!--address-2-->
+                        <div class="md-form mb-5">
+                            {{form.apartment_address}}
+                            {% comment %} <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite">{% endcomment %}
+                            <label for="address-2" class="">Address 2 (optional)</label>
+                        </div>
+
+                        <!--Grid row-->
+                        <div class="row">
+
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4">
+
+                                <label for="country">Country</label>
+                                {{form.country}}
+                                <div class="invalid-feedback">
+                                    Please select a valid country.
+                                </div>
+
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <!--                <div class="col-lg-4 col-md-6 mb-4">-->
+
+                            <!--                  <label for="state">State</label>-->
+                            <!--                  <select class="custom-select d-block w-100" id="state" required>-->
+                            <!--                    <option value="">Choose...</option>-->
+                            <!--                    <option>California</option>-->
+                            <!--                  </select>-->
+                            <!--                  <div class="invalid-feedback">-->
+                            <!--                    Please provide a valid state.-->
+                            <!--                  </div>-->
+
+                            <!--                </div>-->
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-6 mb-4">
+
+                                <label for="zip">Zip</label>
+                                {{form.zip}}
+                                {% comment %}<input type="text" class="form-control" id="zip" placeholder="" required>{% endcomment %}
+                                <div class="invalid-feedback">
+                                    Zip code required.
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                        <!--Grid row-->
+
+                        <hr>
+
+                        <div class="custom-control custom-checkbox">
+                            {{form.same_billing_address}}
+                            <input type="checkbox" class="custom-control-input" id="same-address">
+                            <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            {{form.save_info}}
+                            {% comment %}<input type="checkbox" class="custom-control-input" id="save-info">{% endcomment %}
+                            <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                        </div>
+
+                        <hr>
+
+                        <!--              <div class="d-block my-3">-->
+                        <!--                <div class="custom-control custom-radio">-->
+                        <!--                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>-->
+                        <!--                  <label class="custom-control-label" for="credit">Credit card</label>-->
+                        <!--                </div>-->
+                        <!--                <div class="custom-control custom-radio">-->
+                        <!--                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>-->
+                        <!--                  <label class="custom-control-label" for="debit">Debit card</label>-->
+                        <!--                </div>-->
+                        {% for value, name in form.fields.payment_options.choices%}
+                        <div class="custom-control custom-radio">
+                            <input id="{{name}}" name="paymentmethod" type="radio" class="custom-control-input" required>
+                            <label class="custom-control-label" for="{{name}}">{{name}}</label>
+                        </div>
+                        {% endfor %}
+<!--                        <div class="custom-control custom-radio">-->
+<!--                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>-->
+<!--                            <label class="custom-control-label" for="paypal">Paypal</label>-->
+<!--                        </div>-->
+<!--                            </div>-->
+                <!--              <div class="row">-->
+                <!--                <div class="col-md-6 mb-3">-->
+                <!--                  <label for="cc-name">Name on card</label>-->
+                <!--                  <input type="text" class="form-control" id="cc-name" placeholder="" required>-->
+                <!--                  <small class="text-muted">Full name as displayed on card</small>-->
+                <!--                  <div class="invalid-feedback">-->
+                <!--                    Name on card is required-->
+                <!--                  </div>-->
+                <!--                </div>-->
+                <!--                <div class="col-md-6 mb-3">-->
+                <!--                  <label for="cc-number">Credit card number</label>-->
+                <!--                  <input type="text" class="form-control" id="cc-number" placeholder="" required>-->
+                <!--                  <div class="invalid-feedback">-->
+                <!--                    Credit card number is required-->
+                <!--                  </div>-->
+                <!--                </div>-->
+                <!--              </div>-->
+                <!--              <div class="row">-->
+                <!--                <div class="col-md-3 mb-3">-->
+                <!--                  <label for="cc-expiration">Expiration</label>-->
+                <!--                  <input type="text" class="form-control" id="cc-expiration" placeholder="" required>-->
+                <!--                  <div class="invalid-feedback">-->
+                <!--                    Expiration date required-->
+                <!--                  </div>-->
+                <!--                </div>-->
+                <!--                <div class="col-md-3 mb-3">-->
+                <!--                  <label for="cc-expiration">CVV</label>-->
+                <!--                  <input type="text" class="form-control" id="cc-cvv" placeholder="" required>-->
+                <!--                  <div class="invalid-feedback">-->
+                <!--                    Security code required-->
+                <!--                  </div>-->
+                <!--                </div>-->
+<!--                            </div>-->
+                     <hr class="mb-4">
+                    <a href="{% url 'core:charge_base' %}" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</a>
+                </form>
+
+
+        </div>
+        <!--/.Card-->
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-md-4 mb-4">
+
+        <!-- Heading -->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">{{cart_qty}}</span>
+        </h4>
+
+        <!-- Cart -->
+
+        <ul class="list-group mb-3 z-depth-1">
+            {% for obj in q.items.all %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">
+                        {% if obj.quantity > 1%}
+                        {{obj}}s
+                        {% else %}
+                        {{obj}}
+                        {% endif %}
+                    </h6>
+                    <small class="text-muted">Brief description</small>
+                </div>
+                {% if obj.item.discount_price %}
+                <span class="text-muted">₹{% widthratio obj.quantity 1 obj.item.discount_price%}</span>
+                {% else %}
+                <span class="text-muted">₹{% widthratio obj.quantity 1 obj.item.price%}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            <!--            <li class="list-group-item d-flex justify-content-between bg-light">-->
+            <!--              <div class="text-success">-->
+            <!--                <h6 class="my-0">Promo code</h6>-->
+            <!--                <small>EXAMPLECODE</small>-->
+            <!--              </div>-->
+            <!--              <span class="text-success">-$5</span>-->
+            <!--            </li>-->
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total (INR)</span>
+                <strong>₹{{total_amount}}</strong>
+            </li>
+        </ul>
+        <!-- Cart -->
+
+        <!-- Promo code -->
+        <form class="card p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Promo code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Redeem</button>
+                </div>
+            </div>
+        </form>
+        <!-- Promo code -->
+
+    </div>
+    <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+<!--Footer-->
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <!--Call to action-->
+    <div class="pt-4">
+        <a class="btn btn-outline-white" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank" role="button">Download MDB
+            <i class="fas fa-download ml-2"></i>
+        </a>
+        <a class="btn btn-outline-white" href="https://mdbootstrap.com/education/bootstrap/" target="_blank" role="button">Start free tutorial
+            <i class="fas fa-graduation-cap ml-2"></i>
+        </a>
+    </div>
+    <!--/.Call to action-->
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+        <a href="https://www.facebook.com/mdbootstrap" target="_blank">
+            <i class="fab fa-facebook-f mr-3"></i>
+        </a>
+
+        <a href="https://twitter.com/MDBootstrap" target="_blank">
+            <i class="fab fa-twitter mr-3"></i>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
+            <i class="fab fa-youtube mr-3"></i>
+        </a>
+
+        <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
+            <i class="fab fa-google-plus-g mr-3"></i>
+        </a>
+
+        <a href="https://dribbble.com/mdbootstrap" target="_blank">
+            <i class="fab fa-dribbble mr-3"></i>
+        </a>
+
+        <a href="https://pinterest.com/mdbootstrap" target="_blank">
+            <i class="fab fa-pinterest mr-3"></i>
+        </a>
+
+        <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
+            <i class="fab fa-github mr-3"></i>
+        </a>
+
+        <a href="http://codepen.io/mdbootstrap/" target="_blank">
+            <i class="fab fa-codepen mr-3"></i>
+        </a>
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+        © 2019 Copyright:
+        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->
+{% endblock %}
+
+</body>
+
+</html>
