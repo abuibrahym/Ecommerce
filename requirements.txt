@@ -1,0 +1,5 @@
+django
+django_allauth
+django_crispy_forms
+python_decouple
+pillow
